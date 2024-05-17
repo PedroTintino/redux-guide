@@ -8,7 +8,7 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     switch(action.type){
         case CartActionTypes.ADD_PRODUCT:
-            // Verificar se já está no carrinho
+            // Verificar se já está presente
             const productIsAlreadyInCart = state.products.some(
                 (product) => product.id === action.payload.id
             );
@@ -26,6 +26,18 @@ const cartReducer = (state = initialState, action) => {
             return{
                 ...state,
                 products: state.products.filter(product => product.id !== action.payload)
+            }
+        
+        case CartActionTypes.ADD_QUANTITY:
+            return{
+                ...state,
+                products: state.products.map((product) => product.id === action.payload ? {...product, quantity: product.quantity + 1} : product)
+            }
+        
+        case CartActionTypes.DECREMENT_QUANTITY:
+            return{
+                ...state,
+                products: state.products.map((product) => product.id === action.payload ? {...product, quantity: product.quantity - 1} : product)
             }
         
         default: 

@@ -9,6 +9,7 @@ import * as Styles from "./styles";
 import { useSelector, useDispatch } from 'react-redux';
 // import actionTypes from "../../redux/user/action-types";
 import { loginUser, logoutUser } from '../../redux/user/actions';
+import { selectProductsCount } from "../../redux/cart/cart.selectors";
 
 
 
@@ -17,12 +18,15 @@ function Header() {
   
   const { currentUser } = useSelector((rootReducer) => rootReducer.userReducer);
   const { products } = useSelector((rootReducer) => rootReducer.cartReducer);
+
+  const productsCount = useSelector(selectProductsCount);
+
   const dispatch = useDispatch();
 
   // ESTUDAR USEMEMO
-  const productsCount = useMemo(() => {
-    return products.reduce((acc, curr) => acc + curr.quantity, 0);
-  }, [products]);
+  // const productsCount = useMemo(() => {
+  //   return products.reduce((acc, curr) => acc + curr.quantity, 0);
+  // }, [products]);
 
   const handleLoginClick = () => {
     dispatch(loginUser({name: "Pedro", lastName: "Tintino"}))
